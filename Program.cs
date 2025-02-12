@@ -38,11 +38,18 @@ builder.Services.AddDbContext<ToDoDbContext>(options =>
 var app = builder.Build();
 
 // app.UseCors("AllowClient");
-if (app.Environment.IsDevelopment())
-{
+// if (app.Environment.IsDevelopment())
+// {
+//     app.UseSwagger();
+//     app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Todo API v1"));
+// }
+
     app.UseSwagger();
-    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Todo API v1"));
-}
+    app.UseSwaggerUI(c => 
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "TodoList API");
+        c.RoutePrefix = string.Empty;
+    });
 
 app.MapGet("/", () => "hello world!");
 
