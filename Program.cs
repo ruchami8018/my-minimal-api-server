@@ -6,23 +6,23 @@ using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// builder.Services.AddCors(options =>
-// {
-//     options.AddPolicy("AllowAll", 
-//         policy => policy.AllowAnyOrigin()
-//                         .AllowAnyMethod()
-//                         .AllowAnyHeader());
-// });
-
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowClient", policy =>
-    {
-        policy.WithOrigins("https://clientminimalapi.onrender.com") // החלף ב-URL של הקליינט שלך
-              .AllowAnyMethod()
-              .AllowAnyHeader();
-    });
+    options.AddPolicy("AllowAll", 
+        policy => policy.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader());
 });
+
+// builder.Services.AddCors(options =>
+// {
+//     options.AddPolicy("AllowClient", policy =>
+//     {
+//         policy.WithOrigins("https://clientminimalapi.onrender.com") // החלף ב-URL של הקליינט שלך
+//               .AllowAnyMethod()
+//               .AllowAnyHeader();
+//     });
+// });
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
@@ -37,7 +37,7 @@ builder.Services.AddDbContext<ToDoDbContext>(options =>
     ));
 var app = builder.Build();
 
-app.UseCors("AllowClient");
+// app.UseCors("AllowClient");
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
