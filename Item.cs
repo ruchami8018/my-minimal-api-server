@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace TodoApi;
 
-public partial class Item
+public partial class item
 {
     public int Id { get; set; }
 
