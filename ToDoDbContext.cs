@@ -29,9 +29,12 @@ public partial class ToDoDbContext : DbContext
 
         modelBuilder.Entity<Item>(entity =>
         {
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
+
             entity.ToTable("items");
-            entity.HasKey(e => e.Id);
-            entity.Property(e => e.Name).IsRequired().HasMaxLength(100);
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Name).HasColumnName("name").HasMaxLength(100);
         });
 
         OnModelCreatingPartial(modelBuilder);
