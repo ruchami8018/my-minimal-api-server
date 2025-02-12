@@ -16,7 +16,7 @@ public partial class ToDoDbContext : DbContext
     {
     }
 
-    public virtual DbSet<Item> Items { get; set; }
+    public virtual DbSet<Item> items { get; set; }
 
     // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     //     => optionsBuilder.UseMySql("name=ToDoDB", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.33-mysql"));
