@@ -4,6 +4,7 @@ using TodoApi.Models;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.OpenApi.Models;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Diagnostics;
 
 var builder = WebApplication.CreateBuilder(args);
 
