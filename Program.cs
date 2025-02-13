@@ -99,6 +99,45 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
+// Ensure database is created and migrated
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<ToDoDbContext>();
+    var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+    
+    try 
+    {
+        // Delete existing database (only for development!)
+        // dbContext.Database.EnsureDeleted();
+        
+        // Create database if not exists
+        dbContext.Database.EnsureCreated();
+        
+        // Apply any pending migrations
+        if (dbContext.Database.GetPendingMigrations().Any())
+        {
+            dbContext.Database.Migrate();
+            logger.LogInformation("Database migrations applied successfully.");
+        }
+        
+        // Verify table exists
+        var tableExists = dbContext.Database.ExecuteSqlRaw(
+            "SHOW TABLES LIKE 'items'") > 0;
+        
+        if (!tableExists)
+        {
+            logger.LogWarning("Table 'items' does not exist. Attempting to create.");
+            // You might need to add custom SQL to create the table here
+        }
+    }
+    catch (Exception ex)
+    {
+        // Log any migration or database creation errors
+        logger.LogError(ex, "An error occurred while setting up the database.");
+        throw;
+    }
+}
+
 // הוספת טיפול בשגיאות גלובלי
 app.UseExceptionHandler(errorApp =>
 {
